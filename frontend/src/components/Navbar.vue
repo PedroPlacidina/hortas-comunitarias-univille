@@ -29,7 +29,7 @@
             <router-link to="/canteiros" class="nav-link">Canteiros</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/carteiristas" class="nav-link">Carteiristas</router-link>
+            <router-link to="/canteiristas" class="nav-link">Canteiristas</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/pagamentos" class="nav-link">Pagamentos</router-link>

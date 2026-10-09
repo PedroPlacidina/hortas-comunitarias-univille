@@ -4,7 +4,7 @@
       <div class="col-md-8 mx-auto">
         <div class="card shadow">
           <div class="card-body">
-            <h2 class="mb-4">Novo Carteirista</h2>
+            <h2 class="mb-4">Novo Canteirista</h2>
             
             <div v-if="errorMessage" class="alert alert-danger">
               {{ errorMessage }}
@@ -55,7 +55,7 @@
                   <span v-if="loading">Salvando...</span>
                   <span v-else>Salvar</span>
                 </button>
-                <router-link to="/carteiristas" class="btn btn-secondary">
+                <router-link to="/canteiristas" class="btn btn-secondary">
                   Cancelar
                 </router-link>
               </div>
@@ -75,7 +75,7 @@ import api from '@/services/api'
 import FormInput from '@/components/FormInput.vue'
 
 export default {
-  name: 'CarteiristasCreate',
+  name: 'CanteiristasCreate',
   components: { FormInput },
   setup() {
     const store = useStore()
@@ -151,13 +151,13 @@ export default {
       
       loading.value = true
       try {
-        const res = await store.dispatch('carteiristas/createCarteirista', { ...form, nome_completo: form.nome })
+        const res = await store.dispatch('canteiristas/createCanteirista', { ...form, nome_completo: form.nome })
         loading.value = false
         
         if (res.success) {
-          router.push('/carteiristas')
+          router.push('/canteiristas')
         } else {
-          errorMessage.value = res.message || 'Erro ao criar carteirista. Verifique se o backend está configurado corretamente.'
+          errorMessage.value = res.message || 'Erro ao criar canteirista. Verifique se o backend está configurado corretamente.'
         }
       } catch (error) {
         loading.value = false

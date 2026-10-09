@@ -6,20 +6,20 @@
     
     <form v-else @submit.prevent="handleSubmit" class="form">
       <div class="form-group">
-        <label for="carteirista">Carteirista <span class="required">*</span></label>
+        <label for="canteirista">Canteirista <span class="required">*</span></label>
         <select
-          id="carteirista"
+          id="canteirista"
           v-model="form.carteirista_uuid"
           class="form-control"
           :class="{ 'is-invalid': errors.carteirista_uuid }"
         >
-          <option value="">Selecione um carteirista</option>
+          <option value="">Selecione um canteirista</option>
           <option 
-            v-for="carteirista in carteiristas" 
-            :key="carteirista.id" 
-            :value="carteirista.id"
+            v-for="canteirista in canteiristas" 
+            :key="canteirista.id" 
+            :value="canteirista.id"
           >
-            {{ carteirista.nome }}{{ carteirista.telefone ? ` - ${carteirista.telefone}` : '' }}
+            {{ canteirista.nome }}{{ canteirista.telefone ? ` - ${canteirista.telefone}` : '' }}
           </option>
         </select>
         <span v-if="errors.carteirista_uuid" class="error-message">{{ errors.carteirista_uuid }}</span>
@@ -120,11 +120,11 @@ export default {
     const loading = ref(true);
     const saving = ref(false);
 
-    const carteiristas = computed(() => store.getters['carteiristas/allCarteiristas']);
+    const canteiristas = computed(() => store.getters['canteiristas/allCanteiristas']);
 
     onMounted(async () => {
       try {
-        await store.dispatch('carteiristas/fetchCarteiristas');
+        await store.dispatch('canteiristas/fetchCanteiristas');
         
         const pagamentoId = route.params.id;
         const resp = await store.dispatch('pagamentos/fetchPagamentoById', pagamentoId);
@@ -150,7 +150,7 @@ export default {
       Object.keys(errors).forEach(key => errors[key] = '');
 
       if (!form.carteirista_uuid) {
-        errors.carteirista_uuid = 'Selecione um carteirista';
+        errors.carteirista_uuid = 'Selecione um canteirista';
         isValid = false;
       }
 
@@ -218,7 +218,7 @@ export default {
       errors,
       loading,
       saving,
-      carteiristas,
+      canteiristas,
       handleSubmit,
       handleCancel
     };

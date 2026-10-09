@@ -6,7 +6,7 @@
           🌱 Sistema de Gestão de Hortas Comunitárias
         </h1>
         <p class="lead text-center text-muted mb-5">
-          Gerencie associações, hortas, canteiros e carteiristas
+          Gerencie associações, hortas, canteiros e canteiristas
         </p>
       </div>
     </div>
@@ -61,11 +61,11 @@
         <div class="card text-center shadow-sm h-100">
           <div class="card-body">
             <div class="fs-1 text-success mb-3">👥</div>
-            <h5 class="card-title">Carteiristas</h5>
+            <h5 class="card-title">Canteiristas</h5>
             <p class="card-text text-muted">
               Gerencie responsáveis
             </p>
-            <router-link to="/carteiristas" class="btn btn-success">
+            <router-link to="/canteiristas" class="btn btn-success">
               Acessar
             </router-link>
           </div>
@@ -88,7 +88,7 @@
           <div class="card-body">
             <div class="fs-1 text-success mb-3">🧑‍🌾</div>
             <h5 class="card-title">Dependentes</h5>
-            <p class="card-text text-muted">Gerencie dependentes dos carteiristas</p>
+            <p class="card-text text-muted">Gerencie dependentes dos canteiristas</p>
             <router-link to="/dependentes" class="btn btn-success">Acessar</router-link>
           </div>
         </div>

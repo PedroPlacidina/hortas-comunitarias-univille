@@ -63,21 +63,21 @@ component: () => import('@/views/Hortas/Edit.vue'),
 meta: { requiresAuth: true }
 },
 {
-path: '/carteiristas',
-name: 'CarteiristasList',
-component: () => import('@/views/Carteiristas/List.vue'),
+path: '/canteiristas',
+name: 'CanteiristasList',
+component: () => import('@/views/Canteiristas/List.vue'),
 meta: { requiresAuth: true }
 },
 {
-path: '/carteiristas/criar',
-name: 'CarteiristasCreate',
-component: () => import('@/views/Carteiristas/Create.vue'),
+path: '/canteiristas/criar',
+name: 'CanteiristasCreate',
+component: () => import('@/views/Canteiristas/Create.vue'),
 meta: { requiresAuth: true }
 },
 {
-path: '/carteiristas/:id/editar',
-name: 'CarteiristasEdit',
-component: () => import('@/views/Carteiristas/Edit.vue'),
+path: '/canteiristas/:id/editar',
+name: 'CanteiristasEdit',
+component: () => import('@/views/Canteiristas/Edit.vue'),
 meta: { requiresAuth: true }
 },
 {

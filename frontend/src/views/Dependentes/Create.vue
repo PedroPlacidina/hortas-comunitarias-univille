@@ -64,7 +64,7 @@
               </div>
 
               <div class="mb-3">
-                <label for="carteirista_uuid" class="form-label">Carteirista (Responsável) <span class="text-danger">*</span></label>
+                <label for="carteirista_uuid" class="form-label">Canteirista (Responsável) <span class="text-danger">*</span></label>
                 <select
                   id="carteirista_uuid"
                   v-model="form.carteirista_uuid"
@@ -72,9 +72,9 @@
                   :class="{ 'is-invalid': errors.carteirista_uuid }"
                   required
                 >
-                  <option value="">Selecione um carteirista</option>
-                  <option v-for="carteirista in carteiristas" :key="carteirista.id" :value="carteirista.id">
-                    {{ carteirista.nome }} {{ carteirista.telefone ? `- ${carteirista.telefone}` : '' }}
+                  <option value="">Selecione um canteirista</option>
+                  <option v-for="canteirista in canteiristas" :key="canteirista.id" :value="canteirista.id">
+                    {{ canteirista.nome }} {{ canteirista.telefone ? `- ${canteirista.telefone}` : '' }}
                   </option>
                 </select>
                 <div v-if="errors.carteirista_uuid" class="invalid-feedback">
@@ -136,10 +136,10 @@ export default {
       carteirista_uuid: ''
     })
     
-    const carteiristas = computed(() => store.getters['carteiristas/allCarteiristas'])
+    const canteiristas = computed(() => store.getters['canteiristas/allCanteiristas'])
     
     onMounted(() => {
-      store.dispatch('carteiristas/fetchCarteiristas')
+      store.dispatch('canteiristas/fetchCanteiristas')
     })
     
     const loading = ref(false)
@@ -180,7 +180,7 @@ export default {
       }
       
       if (!form.carteirista_uuid || form.carteirista_uuid === '') {
-        errors.carteirista_uuid = 'Selecione um carteirista'
+        errors.carteirista_uuid = 'Selecione um canteirista'
         isValid = false
       }
       
@@ -231,7 +231,7 @@ export default {
       errors,
       loading,
       errorMessage,
-      carteiristas,
+      canteiristas,
       onSubmit,
       formatCPF
     }

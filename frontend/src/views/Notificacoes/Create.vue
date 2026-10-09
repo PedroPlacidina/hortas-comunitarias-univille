@@ -14,7 +14,7 @@
         >
           <option value="">Selecione o tipo</option>
           <option value="aviso_geral">Aviso Geral</option>
-          <option value="aviso_canteirista">Aviso para Carteirista Específico</option>
+          <option value="aviso_canteirista">Aviso para Canteirista Específico</option>
           <option value="evento_horta">Evento da Horta</option>
         </select>
         <span v-if="errors.tipo" class="error-message">{{ errors.tipo }}</span>
@@ -47,22 +47,22 @@
         <span v-if="errors.mensagem" class="error-message">{{ errors.mensagem }}</span>
       </div>
 
-      <!-- Campo Carteirista (apenas para aviso_canteirista) -->
+      <!-- Campo Canteirista (apenas para aviso_canteirista) -->
       <div v-if="form.tipo === 'aviso_canteirista'" class="form-group">
-        <label for="carteirista">Carteirista <span class="required">*</span></label>
+        <label for="canteirista">Canteirista <span class="required">*</span></label>
         <select
-          id="carteirista"
+          id="canteirista"
           v-model="form.carteirista_uuid"
           class="form-control"
           :class="{ 'is-invalid': errors.carteirista_uuid }"
         >
-          <option value="">Selecione um carteirista</option>
+          <option value="">Selecione um canteirista</option>
           <option 
-            v-for="carteirista in carteiristas" 
-            :key="carteirista.id" 
-            :value="carteirista.id"
+            v-for="canteirista in canteiristas" 
+            :key="canteirista.id" 
+            :value="canteirista.id"
           >
-            {{ carteirista.nome }}{{ carteirista.telefone ? ` - ${carteirista.telefone}` : '' }}
+            {{ canteirista.nome }}{{ canteirista.telefone ? ` - ${canteirista.telefone}` : '' }}
           </option>
         </select>
         <span v-if="errors.carteirista_uuid" class="error-message">{{ errors.carteirista_uuid }}</span>
@@ -202,11 +202,11 @@ export default {
 
     const loading = ref(false);
 
-    const carteiristas = computed(() => store.getters['carteiristas/allCarteiristas']);
+    const canteiristas = computed(() => store.getters['canteiristas/allCanteiristas']);
     const hortas = computed(() => store.getters['hortas/allHortas']);
 
     onMounted(async () => {
-      await store.dispatch('carteiristas/fetchCarteiristas');
+      await store.dispatch('canteiristas/fetchCanteiristas');
       await store.dispatch('hortas/fetchHortas');
     });
 
@@ -243,7 +243,7 @@ export default {
       }
 
       if (form.tipo === 'aviso_canteirista' && !form.carteirista_uuid) {
-        errors.carteirista_uuid = 'Selecione um carteirista';
+        errors.carteirista_uuid = 'Selecione um canteirista';
         isValid = false;
       }
 
@@ -317,7 +317,7 @@ export default {
       form,
       errors,
       loading,
-      carteiristas,
+      canteiristas,
       hortas,
       handleTipoChange,
       handleSubmit,

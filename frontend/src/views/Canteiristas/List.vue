@@ -449,8 +449,8 @@ export default {
   setup() {
     const store = useStore()
 
-    const carteiristas = computed(() => store.getters['carteiristas/allCarteiristas'])
-    const isLoading = computed(() => store.getters['carteiristas/isLoading'])
+    const canteiristas = computed(() => store.getters['canteiristas/allCanteiristas'])
+    const isLoading = computed(() => store.getters['canteiristas/isLoading'])
 
     const busca = ref('')
     const filtroStatus = ref('')
@@ -482,7 +482,7 @@ export default {
     const errosEditar = ref({})
 
     onMounted(async () => {
-      store.dispatch('carteiristas/fetchCarteiristas')
+      store.dispatch('canteiristas/fetchCanteiristas')
       try {
         const res = await hortasService.getAll()
         hortas.value = res.data || []
@@ -491,17 +491,17 @@ export default {
       }
     })
 
-    const total = computed(() => carteiristas.value.length)
-    const totalAtivos = computed(() => carteiristas.value.filter(c => c.ativo).length)
+    const total = computed(() => canteiristas.value.length)
+    const totalAtivos = computed(() => canteiristas.value.filter(c => c.ativo).length)
     const mediaCanteiros = computed(() => {
-      if (!carteiristas.value.length) return '0.0'
-      const soma = carteiristas.value.reduce((acc, c) => acc + (c.canteiros?.length || 0), 0)
-      return (soma / carteiristas.value.length).toFixed(1)
+      if (!canteiristas.value.length) return '0.0'
+      const soma = canteiristas.value.reduce((acc, c) => acc + (c.canteiros?.length || 0), 0)
+      return (soma / canteiristas.value.length).toFixed(1)
     })
 
     const listaFiltrada = computed(() => {
       const termo = busca.value.toLowerCase()
-      return carteiristas.value.filter(c => {
+      return canteiristas.value.filter(c => {
         const nomeMatch = !termo ||
           c.usuario?.nome_completo?.toLowerCase().includes(termo) ||
           c.usuario?.cpf?.includes(termo) ||
@@ -644,7 +644,7 @@ export default {
           horta_uuid: form.value.horta_uuid,
           canteiros: form.value.canteiros_uuids,
         }
-        const res = await store.dispatch('carteiristas/createCarteirista', payload)
+        const res = await store.dispatch('canteiristas/createCanteirista', payload)
         if (res.success) {
           modalCriar.value = false
         } else {
@@ -670,10 +670,10 @@ export default {
           ativo: formEditar.value.ativo ? 1 : 0,
           canteiros: formEditar.value.canteiros_uuids,
         }
-        const res = await store.dispatch('carteiristas/updateCarteirista', { id: itemSelecionado.value.id, data: payload })
+        const res = await store.dispatch('canteiristas/updateCanteirista', { id: itemSelecionado.value.id, data: payload })
         if (res.success) {
           modalEditar.value = false
-          store.dispatch('carteiristas/fetchCarteiristas')
+          store.dispatch('canteiristas/fetchCanteiristas')
         } else {
           erroModal.value = res.message || 'Erro ao atualizar canteirista'
         }
@@ -686,7 +686,7 @@ export default {
       if (!itemSelecionado.value) return
       salvando.value = true
       try {
-        const res = await store.dispatch('carteiristas/deleteCarteirista', itemSelecionado.value.id)
+        const res = await store.dispatch('canteiristas/deleteCanteirista', itemSelecionado.value.id)
         if (res.success) {
           modalExcluir.value = false
         } else {
@@ -698,7 +698,7 @@ export default {
     }
 
     return {
-      carteiristas, isLoading, busca, filtroStatus, filtroHorta, mostrarFiltros,
+      canteiristas, isLoading, busca, filtroStatus, filtroHorta, mostrarFiltros,
       hortas, canteirosCriar, canteirosEditar,
       total, totalAtivos, mediaCanteiros, listaFiltrada,
       nomeHorta, formatarCpf, formatarData, iniciais, limparFiltros,

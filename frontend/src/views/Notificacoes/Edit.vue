@@ -62,11 +62,11 @@
         >
           <option value="">Selecione um canteirista</option>
           <option 
-            v-for="carteirista in carteiristas" 
-            :key="carteirista.id" 
-            :value="carteirista.id"
+            v-for="canteirista in canteiristas" 
+            :key="canteirista.id" 
+            :value="canteirista.id"
           >
-            {{ carteirista.nome }}
+            {{ canteirista.nome }}
           </option>
         </select>
       </div>
@@ -183,7 +183,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('carteiristas', ['carteiristas']),
+    ...mapState('canteiristas', ['canteiristas']),
     ...mapState('hortas', ['hortas'])
   },
   async mounted() {
@@ -195,12 +195,12 @@ export default {
     }
     
     await this.loadNotificacao()
-    await this.fetchCarteiristas()
+    await this.fetchCanteiristas()
     await this.fetchHortas()
   },
   methods: {
     ...mapActions('notificacoes', ['fetchNotificacaoById', 'updateNotificacao']),
-    ...mapActions('carteiristas', ['fetchCarteiristas']),
+    ...mapActions('canteiristas', ['fetchCanteiristas']),
     ...mapActions('hortas', ['fetchHortas']),
 
     async loadNotificacao() {
