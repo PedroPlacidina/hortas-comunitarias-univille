@@ -99,6 +99,12 @@ component: () => import('@/views/Pagamentos/Edit.vue'),
 meta: { requiresAuth: true }
 },
 {
+path: '/mensalidades',
+name: 'MensalidadesList',
+component: () => import('@/views/Mensalidades/List.vue'),
+meta: { requiresAuth: true }
+},
+{
 path: '/dependentes',
 name: 'DependentesList',
 component: () => import('@/views/Dependentes/List.vue'),

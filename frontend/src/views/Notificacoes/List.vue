@@ -125,7 +125,13 @@
           <div class="text-muted">Acompanhe avisos, manutenções e novidades da horta comunitária</div>
         </div>
         <div>
-          <button class="btn btn-outline-secondary">Marcar todas como lidas</button>
+          <button
+            class="btn btn-outline-secondary"
+            :disabled="!unread || marcandoTodas"
+            @click="onMarkAllRead"
+          >
+            {{ marcandoTodas ? 'Marcando...' : 'Marcar todas como lidas' }}
+          </button>
         </div>
       </div>
 
@@ -168,7 +174,8 @@ export default {
   data() { 
     return { 
       q: '',
-      searchQuery: ''
+      searchQuery: '',
+      marcandoTodas: false
     } 
   },
   computed: {
@@ -184,6 +191,10 @@ export default {
       })
       
       if (!this.user) return false
+
+      if (this.user.cargo_slug) {
+        return this.user.cargo_slug.startsWith('admin')
+      }
       
       // Verifica pelo cargo (nome ou slug)
       if (this.user.cargo) {
@@ -247,8 +258,16 @@ export default {
       this.$store.dispatch('notificacoes/fetchNotificacoes', { q: this.q }) 
     },
     
-    onMarkRead(n) { 
-      this.$store.dispatch('notificacoes/markRead', n.id) 
+    async onMarkRead(n) {
+      const result = await this.$store.dispatch('notificacoes/markRead', n.id)
+      if (!result.success) alert('Erro ao marcar como lida: ' + result.message)
+    },
+
+    async onMarkAllRead() {
+      this.marcandoTodas = true
+      const result = await this.$store.dispatch('notificacoes/markAllRead')
+      this.marcandoTodas = false
+      if (!result.success) alert('Erro ao marcar todas como lidas: ' + result.message)
     },
     
     formatTipo(tipo) {

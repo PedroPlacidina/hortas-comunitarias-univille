@@ -35,6 +35,9 @@
             <router-link to="/pagamentos" class="nav-link">Pagamentos</router-link>
           </li>
           <li class="nav-item">
+            <router-link to="/mensalidades" class="nav-link">Mensalidades</router-link>
+          </li>
+          <li class="nav-item">
             <router-link to="/dependentes" class="nav-link">Dependentes</router-link>
           </li>
           <li class="nav-item">
