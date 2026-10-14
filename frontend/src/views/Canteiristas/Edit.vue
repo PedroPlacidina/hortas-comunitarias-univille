@@ -4,7 +4,7 @@
       <div class="col-md-8 mx-auto">
         <div class="card shadow">
           <div class="card-body">
-            <h2 class="mb-4">Editar Carteirista</h2>
+            <h2 class="mb-4">Editar Canteirista</h2>
             
             <div v-if="isLoading" class="text-center py-5">
               <div class="spinner-border text-success"></div>
@@ -47,7 +47,7 @@
                   <span v-if="loading">Salvando...</span>
                   <span v-else>Salvar</span>
                 </button>
-                <router-link to="/carteiristas" class="btn btn-secondary">
+                <router-link to="/canteiristas" class="btn btn-secondary">
                   Cancelar
                 </router-link>
               </div>
@@ -66,7 +66,7 @@ import { useRouter, useRoute } from 'vue-router'
 import FormInput from '@/components/FormInput.vue'
 
 export default {
-  name: 'CarteiristasEdit',
+  name: 'CanteiristasEdit',
   components: { FormInput },
   setup() {
     const store = useStore()
@@ -85,7 +85,7 @@ export default {
     
     const loading = ref(false)
     const errorMessage = ref('')
-    const isLoading = computed(() => store.getters['carteiristas/isLoading'])
+    const isLoading = computed(() => store.getters['canteiristas/isLoading'])
     
     const validateForm = () => {
       let isValid = true
@@ -133,8 +133,8 @@ export default {
     
     onMounted(async () => {
       const id = route.params.id
-      await store.dispatch('carteiristas/fetchCarteirista', id)
-      const c = store.state.carteiristas.currentCarteirista
+      await store.dispatch('canteiristas/fetchCanteirista', id)
+      const c = store.state.canteiristas.currentCanteirista
       
       if (c) {
         form.nome = c.nome || ''
@@ -163,16 +163,16 @@ export default {
       }
       
       loading.value = true
-      const res = await store.dispatch('carteiristas/updateCarteirista', {
+      const res = await store.dispatch('canteiristas/updateCanteirista', {
         id: route.params.id,
         data: { nome_completo: form.nome, telefone: form.telefone }
       })
       loading.value = false
       
       if (res.success) {
-        router.push('/carteiristas')
+        router.push('/canteiristas')
       } else {
-        errorMessage.value = res.message || 'Erro ao atualizar carteirista'
+        errorMessage.value = res.message || 'Erro ao atualizar canteirista'
       }
     }
     

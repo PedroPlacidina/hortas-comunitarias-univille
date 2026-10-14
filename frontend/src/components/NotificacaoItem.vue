@@ -6,8 +6,8 @@
           <i :class="iconClass"></i>
         </div>
         <div>
-          <div class="fw-bold">{{ notificacao.title }} <span v-if="!notificacao.lida" class="text-primary">•</span></div>
-          <div class="text-muted small mt-1">{{ notificacao.body }}</div>
+          <div class="fw-bold">{{ notificacao.titulo || notificacao.title }} <span v-if="!notificacao.lida" class="text-primary">•</span></div>
+          <div class="text-muted small mt-1">{{ notificacao.mensagem || notificacao.body }}</div>
           <div class="mt-2">
             <span class="badge bg-light text-dark small me-2">{{ notificacao.tag || 'Info' }}</span>
           </div>
@@ -15,7 +15,7 @@
       </div>
       <div class="text-end small text-muted">
         <div>{{ timeAgo }}</div>
-        <div class="mt-2"><a href="#" @click.prevent="markAsRead">Marcar como lida</a></div>
+        <div v-if="!notificacao.lida" class="mt-2"><a href="#" @click.prevent="markAsRead">Marcar como lida</a></div>
       </div>
     </div>
   </div>
@@ -42,7 +42,7 @@ export default {
     },
     timeAgo() {
       // simple fallback, backend should provide readable string
-      return this.notificacao.time_ago || this.notificacao.created_at || ''
+      return this.notificacao.time_ago || this.notificacao.created_at || this.notificacao.data_inicio || ''
     }
   },
   methods: {

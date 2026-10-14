@@ -31,7 +31,7 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Carteirista</th>
+            <th>Canteirista</th>
             <th>Telefone</th>
             <th>Valor</th>
             <th>Forma</th>

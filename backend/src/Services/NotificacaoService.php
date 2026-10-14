@@ -33,6 +33,22 @@ class NotificacaoService
         return $this->repository->findAtivas();
     }
 
+    public function findUuidsLidas(string $usuarioUuid): array
+    {
+        return $this->repository->findUuidsLidasPorUsuario($usuarioUuid);
+    }
+
+    public function marcarComoLida(string $uuid, string $usuarioUuid): void
+    {
+        $this->findByUuid($uuid);
+        $this->repository->marcarComoLida($uuid, $usuarioUuid);
+    }
+
+    public function marcarTodasComoLidas(string $usuarioUuid): int
+    {
+        return $this->repository->marcarTodasComoLidas($usuarioUuid);
+    }
+
     public function findByUuid(string $uuid)
     {
         $notificacao = $this->repository->findByUuid($uuid);

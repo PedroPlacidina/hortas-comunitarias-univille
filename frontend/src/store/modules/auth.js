@@ -69,6 +69,7 @@ const actions = {
           email: userData.email,
           cargo: userData.cargo?.nome || userData.cargo?.slug || 'Usuário',
           cargo_uuid: decoded.cargo_uuid,
+          cargo_slug: decoded.cargo_slug,
           associacao_uuid: decoded.associacao_uuid,
           horta_uuid: decoded.horta_uuid
         }
@@ -80,7 +81,8 @@ const actions = {
         const user = {
           nome: credentials.email.split('@')[0],
           email: credentials.email,
-          cargo_uuid: decoded.cargo_uuid
+          cargo_uuid: decoded.cargo_uuid,
+          cargo_slug: decoded.cargo_slug
         }
         commit('SET_USER', user)
       }

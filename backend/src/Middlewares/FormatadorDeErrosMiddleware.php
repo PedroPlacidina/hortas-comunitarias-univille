@@ -37,9 +37,13 @@ class FormatadorDeErrosMiddleware
             return $response->withHeader('Content-Type', 'application/json')
                 ->withStatus($e->getCode());
         } catch (Throwable $e) {
+            error_log(sprintf('%s: %s em %s:%d', get_class($e), $e->getMessage(), $e->getFile(), $e->getLine()));
+
+            $debug = filter_var($_ENV['APP_DEBUG'] ?? false, FILTER_VALIDATE_BOOLEAN);
+
             $response = new \Slim\Psr7\Response();
             $response->getBody()->write(json_encode([
-                'error' => $e->getMessage(),
+                'error' => $debug ? $e->getMessage() : 'Erro interno',
                 'status' => 500
             ], JSON_UNESCAPED_UNICODE));
             return $response->withHeader('Content-Type', 'application/json')

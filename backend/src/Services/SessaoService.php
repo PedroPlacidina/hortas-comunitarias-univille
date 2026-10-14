@@ -40,6 +40,7 @@ class SessaoService
         $payload = [
             'usuario_uuid' => $usuario->uuid,
             'cargo_uuid' => $usuario->cargo_uuid,
+            'cargo_slug' => $this->cargoModel->find($usuario->cargo_uuid)?->slug,
             'associacao_uuid' => $usuario->associacao_uuid,
             'horta_uuid' => $usuario->horta_uuid,
             'exp' => time() + 7200,
@@ -100,6 +101,7 @@ class SessaoService
             $payload = [
                 'usuario_uuid' => $usuario->uuid,
                 'cargo_uuid' => $usuario->cargo_uuid,
+                'cargo_slug' => $cargo->slug,
                 'associacao_uuid' => $usuario->associacao_uuid,
                 'horta_uuid' => $usuario->horta_uuid,
                 'exp' => time() + 7200,

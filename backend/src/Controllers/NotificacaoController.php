@@ -20,8 +20,9 @@ class NotificacaoController
     {
         try {
             $notificacoes = $this->service->findAll();
+            $lidas = array_flip($this->service->findUuidsLidas($request->getAttribute('usuario_uuid')));
             
-            $formatted = $notificacoes->map(function ($n) {
+            $formatted = $notificacoes->map(function ($n) use ($lidas) {
                 return [
                     'id' => $n->uuid,
                     'tipo' => $n->tipo,
@@ -37,6 +38,7 @@ class NotificacaoController
                     'ativa' => (bool) $n->ativa,
                     'prioridade' => $n->prioridade,
                     'data_criacao' => $n->data_de_criacao?->format('Y-m-d H:i:s'),
+                    'lida' => isset($lidas[$n->uuid]),
                 ];
             });
 
@@ -58,8 +60,9 @@ class NotificacaoController
     {
         try {
             $notificacoes = $this->service->findAtivas();
+            $lidas = array_flip($this->service->findUuidsLidas($request->getAttribute('usuario_uuid')));
             
-            $formatted = $notificacoes->map(function ($n) {
+            $formatted = $notificacoes->map(function ($n) use ($lidas) {
                 return [
                     'id' => $n->uuid,
                     'tipo' => $n->tipo,
@@ -68,6 +71,7 @@ class NotificacaoController
                     'prioridade' => $n->prioridade,
                     'data_evento' => $n->data_evento?->format('Y-m-d H:i:s'),
                     'horta_nome' => $n->horta->nome ?? null,
+                    'lida' => isset($lidas[$n->uuid]),
                 ];
             });
 
@@ -200,6 +204,37 @@ class NotificacaoController
             ]));
             return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
         }
+    }
+
+    public function marcarLida(Request $request, Response $response, array $args): Response
+    {
+        try {
+            $this->service->marcarComoLida($args['id'], $request->getAttribute('usuario_uuid'));
+
+            $response->getBody()->write(json_encode([
+                'success' => true,
+                'message' => 'Notificação marcada como lida'
+            ]));
+            return $response->withHeader('Content-Type', 'application/json');
+        } catch (InvalidArgumentException $e) {
+            $response->getBody()->write(json_encode([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
+        }
+    }
+
+    public function marcarTodasLidas(Request $request, Response $response): Response
+    {
+        $marcadas = $this->service->marcarTodasComoLidas($request->getAttribute('usuario_uuid'));
+
+        $response->getBody()->write(json_encode([
+            'success' => true,
+            'message' => 'Notificações marcadas como lidas',
+            'data' => ['marcadas' => $marcadas]
+        ]));
+        return $response->withHeader('Content-Type', 'application/json');
     }
 
     public function delete(Request $request, Response $response, array $args): Response

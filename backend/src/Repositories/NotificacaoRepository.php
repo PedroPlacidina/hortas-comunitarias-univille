@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\NotificacaoModel;
+use Illuminate\Database\Capsule\Manager as DB;
 use Ramsey\Uuid\Uuid;
 
 class NotificacaoRepository
@@ -65,6 +66,31 @@ class NotificacaoRepository
         $notificacao->excluido = 1;
         $notificacao->save();
         return true;
+    }
+
+    public function findUuidsLidasPorUsuario(string $usuarioUuid): array
+    {
+        return DB::table('notificacoes_lidas')
+            ->where('usuario_uuid', $usuarioUuid)
+            ->pluck('notificacao_uuid')
+            ->all();
+    }
+
+    public function marcarComoLida(string $notificacaoUuid, string $usuarioUuid): void
+    {
+        DB::table('notificacoes_lidas')->insertOrIgnore([
+            'notificacao_uuid' => $notificacaoUuid,
+            'usuario_uuid' => $usuarioUuid,
+        ]);
+    }
+
+    public function marcarTodasComoLidas(string $usuarioUuid): int
+    {
+        return DB::connection()->affectingStatement(
+            'INSERT IGNORE INTO notificacoes_lidas (notificacao_uuid, usuario_uuid)
+             SELECT uuid, ? FROM notificacoes WHERE excluido = 0',
+            [$usuarioUuid]
+        );
     }
 }
 

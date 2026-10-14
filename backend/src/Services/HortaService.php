@@ -26,10 +26,7 @@ class HortaService
 
     public function findAllWhere(array $condition = [], array $payloadUsuarioLogado = []): Collection
     {
-        return $this->hortaRepository->findAllWhere(array_merge(['excluido' => 0], $condition));
-        
         $cargo = $this->getCargoSlug($payloadUsuarioLogado);
-        
         switch ($cargo) {
             case 'admin_plataforma':
                 return $this->hortaRepository->findAllWhere(array_merge(['excluido' => 0], $condition));
@@ -61,7 +58,6 @@ class HortaService
         }
         
         $cargo = $this->getCargoSlug($payloadUsuarioLogado);
-        
         switch ($cargo) {
             case 'admin_plataforma':
                 return $horta;
