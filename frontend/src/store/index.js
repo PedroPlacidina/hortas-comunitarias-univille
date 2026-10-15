@@ -8,6 +8,7 @@ import pagamentos from './modules/pagamentos'
 import mensalidades from './modules/mensalidades'
 import dependentes from './modules/dependentes'
 import notificacoes from './modules/notificacoes'
+import inventario from './modules/inventario'
 
 export default createStore({
   modules: {
@@ -19,6 +20,7 @@ export default createStore({
     pagamentos,
     mensalidades,
     dependentes,
-    notificacoes
+    notificacoes,
+    inventario
   }
 })

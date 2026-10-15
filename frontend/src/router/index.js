@@ -105,6 +105,18 @@ component: () => import('@/views/Mensalidades/List.vue'),
 meta: { requiresAuth: true }
 },
 {
+path: '/inventario',
+name: 'InventarioList',
+component: () => import('@/views/Inventario/List.vue'),
+meta: { requiresAuth: true }
+},
+{
+path: '/inventario/:id',
+name: 'InventarioDetalhe',
+component: () => import('@/views/Inventario/Detalhe.vue'),
+meta: { requiresAuth: true }
+},
+{
 path: '/dependentes',
 name: 'DependentesList',
 component: () => import('@/views/Dependentes/List.vue'),
